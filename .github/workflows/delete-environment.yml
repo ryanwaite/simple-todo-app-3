@@ -4,7 +4,7 @@
 # provider (delete-environment-azure.yml) live here so the environment-delete
 # safety guard (refuse to delete an environment that still has deployed apps)
 # can be owned and reviewed in this repo. The extension commits both files
-# verbatim (only filling the Production-1 dispatch default) into the target repo's
+# verbatim (only filling the Production-2 dispatch default) into the target repo's
 # .github/workflows/.
 #
 # It binds to the selected GitHub Environment so environment-scoped variables are
@@ -23,7 +23,7 @@ on:
       environment:
         description: 'GitHub Environment name'
         required: true
-        default: 'Production-1'
+        default: 'Production-2'
       environment_name:
         description: 'Radius environment name to delete (defaults to the GitHub Environment name)'
         required: false
@@ -46,7 +46,7 @@ jobs:
   detect:
     name: Detect provider
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment || 'Production-1' }}
+    environment: ${{ inputs.environment || 'Production-2' }}
     outputs:
       provider: ${{ steps.detect.outputs.provider }}
     steps:
@@ -70,7 +70,7 @@ jobs:
     if: ${{ needs.detect.outputs.provider == 'azure' }}
     uses: ./.github/workflows/delete-environment-azure.yml
     with:
-      environment: ${{ inputs.environment || 'Production-1' }}
+      environment: ${{ inputs.environment || 'Production-2' }}
       resource_type: environment
-      name: ${{ inputs.environment_name || inputs.environment || 'Production-1' }}
+      name: ${{ inputs.environment_name || inputs.environment || 'Production-2' }}
     secrets: inherit
