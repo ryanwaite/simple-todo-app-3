@@ -14,7 +14,7 @@ on:
       environment:
         description: 'GitHub Environment name'
         required: true
-        default: 'Production-1'
+        default: 'Production-2'
       application:
         description: 'Name of the application to delete'
         required: true
@@ -41,7 +41,7 @@ jobs:
   detect:
     name: Detect provider
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment || 'Production-1' }}
+    environment: ${{ inputs.environment || 'Production-2' }}
     outputs:
       provider: ${{ steps.detect.outputs.provider }}
     steps:
@@ -64,7 +64,7 @@ jobs:
     if: ${{ needs.detect.outputs.provider == 'azure' }}
     uses: ./.github/workflows/delete-azure.yml
     with:
-      environment: ${{ inputs.environment || 'Production-1' }}
+      environment: ${{ inputs.environment || 'Production-2' }}
       resource_type: application
       name: ${{ inputs.application }}
       # A workflow_dispatch boolean input arrives as the string "true"/"false",
